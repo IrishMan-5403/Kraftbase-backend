@@ -8,4 +8,4 @@ export interface MyContext {
     req: Request
     user?: User
     restaurant?:Restaurant
-}
+   

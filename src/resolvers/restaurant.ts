@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import { MyContext } from "../utils/context";
 import {RegisterRestaurantInput , LoginRestaurantInput} from "../types/restaurant";
+import { idText } from "typescript";
 
 dotenv.config();
 @Resolver()
@@ -49,9 +50,21 @@ export class RestaurantResolver {
     }
 
     @Mutation(()=> Boolean)
-    async deleteRestaurant(@Ctx() {res}:any):Promise<Boolean> {
+    async deleteRestaurant(@Arg('id') id:number):Promise<Boolean> {
+        try {
+            const result = await Restaurant.delete(id);
+      
+            if (result.affected === 0) {
+              throw new Error('Restaurant not found');
+            }
+      
+            return !(result.affected ===0);
+          } catch (err:any) {
+            throw new Error(`Error deleting restaurant: ${err.message}`);
+          }
+        }
         
-    }
+    
 
     @Query(() => [Restaurant])
     async getRestaurants(): Promise<Restaurant[]> {

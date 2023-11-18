@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import { MyContext } from "../utils/context";
-import { LoginUserInput, RegisterUserInput } from "./types";
+import { LoginUserInput, RegisterUserInput } from "../types/user";
 
 dotenv.config();
 @Resolver()

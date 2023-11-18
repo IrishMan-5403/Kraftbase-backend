@@ -1,7 +1,6 @@
 import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, BeforeInsert, OneToMany, OneToOne, ManyToOne, ManyToMany } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 import Pizza from './pizza';
-import Order from './order';
 
 @ObjectType("Restaurant")
 @Entity("Restaurant")
@@ -37,7 +36,7 @@ export class Restaurant extends BaseEntity {
     @Field(()=> [Pizza])
     @OneToMany(()=>Pizza,pizza=>pizza.restaurant)
     pizzas!:Pizza[]
-    
+
 }
 
 export default Restaurant;
