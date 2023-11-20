@@ -1,5 +1,6 @@
+import Order from "./order";
 import Pizza from "./pizza";
 import Restaurant from "./restaurant";
 import User from "./user";
 
-export default [User, Restaurant, Pizza]
+export default [User, Restaurant, Pizza, Order]

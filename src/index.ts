@@ -18,7 +18,7 @@ import { MyContext } from "./utils/context";
 import Restaurant from "./entities/restaurant";
 
 dotenv.config();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT ;
 const corsOrigin = ["http://localhost:8080", "http://localhost:3000"];
 
 
@@ -75,12 +75,13 @@ async function bootstrap() {
     console.log(`Server ready at http://localhost:${PORT}/graphql`);
 }
 
+
 const AppDataSource = new DataSource({
     type: "postgres",
     host: "localhost",
     port: 5432,
-    username: process.env.USERNAME,
-    password: process.env.PASSWORD,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASS,
     database: process.env.DATABASE,
     synchronize: true,
     logging: true,

@@ -1,6 +1,6 @@
 import { Field, InputType } from "type-graphql";
 
-@InputType("EventInput")
+@InputType("RegistUserInput")
 export class RegisterUserInput {
    
     @Field()
@@ -14,6 +14,8 @@ export class RegisterUserInput {
 
 };
 
+
+@InputType("LoginUserInput")
 export class LoginUserInput {
     @Field()
     email!:string;

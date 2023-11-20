@@ -2,6 +2,7 @@ import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, BeforeInsert, OneTo
 import { ObjectType, Field, ID } from 'type-graphql';
 import Pizza from './pizza';
 import User from './user';
+import Restaurant from './restaurant';
 
 @ObjectType("Order")
 @Entity("Order")
@@ -21,6 +22,10 @@ export class Order extends BaseEntity {
     @Field(() => User)
     @ManyToOne(() => User)
     user!: User;
+
+    @Field(()=> Restaurant)
+    @ManyToOne(() =>Restaurant)
+    restaurant!:Restaurant;
 
 
     @Field()

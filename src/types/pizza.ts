@@ -1,7 +1,7 @@
 import { Field, InputType } from "type-graphql";
 import { Restaurant } from "../entities/restaurant";
 
-@InputType("EventInput")
+@InputType("AddPizzaInput")
 export class AddPizzaInput {
    
     @Field()
@@ -20,13 +20,3 @@ export class AddPizzaInput {
     image!: string;
 
 };
-
-// export class deletePizzaInput {
-
-//     @Field()
-//     name!: string;
-
-//     @Field()
-//     restaurant!: Restaurant;
-    
-// }

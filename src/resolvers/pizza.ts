@@ -28,7 +28,7 @@ export class PizzaResolver {
 
         return !!pizza;
     }
-
+    @Mutation(() => Boolean)
     async deletePizza(@Arg('id') id:string):Promise<Boolean> {
         try {
             const result = await Pizza.delete(id);
@@ -41,5 +41,10 @@ export class PizzaResolver {
           } catch (err:any) {
             throw new Error(`Error deleting pizza: ${err.message}`);
         }
+    }
+
+    @Query(() => [Pizza])
+    async getPizzasbyRestaurant(@Arg('restaurantId') restaurantId: string): Promise<Pizza[]> {
+        return await Pizza.find({ where: { restaurant:{id:restaurantId}} })
     }
 }

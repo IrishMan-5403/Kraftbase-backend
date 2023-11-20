@@ -1,6 +1,6 @@
 import { Field, InputType } from "type-graphql";
 
-@InputType("EventInput")
+@InputType("RegisterRestaurantInput")
 export class RegisterRestaurantInput {
    
     @Field()
@@ -23,6 +23,7 @@ export class RegisterRestaurantInput {
 
 };
 
+@InputType("LoginRestaurantInput")
 export class LoginRestaurantInput {
     @Field()
     email!:string;
