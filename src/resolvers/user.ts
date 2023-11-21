@@ -16,9 +16,10 @@ export class UserResolver {
         @Ctx() { res }: MyContext
     ): Promise<Boolean> {
         if(await User.findOne({ where: { email: data.email } })) throw new Error("User already exists");
-
+        const pass=await bcrypt.hash(data.password, 12);
         const user = await User.create({
             ...data,
+              password:pass
         }).save();
 
         let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET!);
@@ -34,7 +35,8 @@ export class UserResolver {
     ): Promise<Boolean> {
         const user = await User.findOne({ where: { email: data.email } });
         if(!user) throw new Error("Invalid Credentials");
-        if(await bcrypt.compare(data.password, user.password)) throw new Error("Invalid password");
+        const pass= await bcrypt.hash(data.password,12)
+        if(await bcrypt.compare(pass, user.password)) throw new Error("Invalid password");
 
         let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "secret");
         res.cookie("token", token, { httpOnly: false });

@@ -8,6 +8,9 @@ export class AddOrderInput {
    
     @Field()
     paid!: boolean;
+
+    @Field()
+    user_id!:string;
     
     @Field()
     restaurant_id!:string;
@@ -19,3 +22,12 @@ export class AddOrderInput {
     status!: string;
 
 };
+
+@InputType("ChangeOrderStatusInput")
+export class ChangeOrderStatusInput{
+    @Field()
+    order_id!:string;
+
+    @Field()
+    new_status!:string;
+}

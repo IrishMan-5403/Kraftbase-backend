@@ -5,12 +5,7 @@ import bcrypt from "bcryptjs"
 @ObjectType("User")
 @Entity("User")
 export class User extends BaseEntity {
-    @BeforeInsert()
-    async setPass() {
-        if (this.password) {
-            this.password = await bcrypt.hash(this.password, 12);
-        }
-    }
+    
     
     @Field(() => ID)
     @PrimaryGeneratedColumn('uuid')
@@ -24,6 +19,7 @@ export class User extends BaseEntity {
     @Column()
     email!: string;
     
+    @Field()
     @Column()
     password!: string;
 }

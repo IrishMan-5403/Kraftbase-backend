@@ -14,7 +14,7 @@ export class AddPizzaInput {
     nonveg!: boolean;
 
     @Field()
-    restaurant_id!: string;
+    restaurant_id!:string;
         
     @Field()
     image!: string;

@@ -14,16 +14,18 @@ export class PizzaResolver {
     @Mutation(() => Boolean)
     async addPizza(
         @Arg("data") data: AddPizzaInput,
-        // @Ctx() {res} :MyContext
+        // @Ctx() {restaurant}: MyContext
     ): Promise<Boolean> {
-        // const restaurant=await Restaurant.findOneOrFail({ where: {id:data.restaurant_id}})
+        // if(!restaurant) throw new Error("Restaurant not logged in")
+        const restaurant= await Restaurant.findOne ({where:{ id:data.restaurant_id}})
+        if(!restaurant) throw new Error("Restaurant Id invalid")
         const peeza=await Pizza.findOne({ where: { name: data.name, restaurant: {id: data.restaurant_id}}
-            // , relations: ["restaurant"]
         })
         if(peeza) throw new Error("Pizza already exists");
 
         const pizza = await Pizza.create({
             ...data,
+            restaurant:restaurant
         }).save();  
 
         return !!pizza;

@@ -31,3 +31,5 @@ export class LoginRestaurantInput {
     @Field()
     password!:string;
 }
+
+

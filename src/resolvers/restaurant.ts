@@ -17,9 +17,10 @@ export class RestaurantResolver {
         @Ctx() { res }: MyContext
     ): Promise<Boolean> {
         if(await Restaurant.findOne({ where: { email: data.email } })) throw new Error("Restaurant already exists");
-
+        const pass=await bcrypt.hash(data.password, 12);
         const restaurant = await Restaurant.create({
             ...data,
+            password:pass
         }).save();
 
         let token = jwt.sign({ id: restaurant.id }, process.env.JWT_SECRET!);
@@ -35,7 +36,8 @@ export class RestaurantResolver {
     ): Promise<Boolean> {
         const restaurant = await Restaurant.findOne({ where: { email: data.email } });
         if(!restaurant) throw new Error("Invalid Credentials");
-        if(await bcrypt.compare(data.password, restaurant.password)) throw new Error("Invalid password");
+        const pass=await bcrypt.hash(data.password, 12);
+        if(await bcrypt.compare(pass, restaurant.password)) throw new Error("Invalid password");
 
         let token = jwt.sign({ id: restaurant.id }, process.env.JWT_SECRET || "secret");
         res.cookie("token", token, { httpOnly: false });
@@ -63,8 +65,28 @@ export class RestaurantResolver {
             throw new Error(`Error deleting restaurant: ${err.message}`);
           }
         }
-        
     
+    
+    @Mutation(()=>Boolean)
+    async changeRestaurantStatus(
+        @Arg('restaurant_id') restaurant_id:string,
+        // @Ctx ('restaurant') resttaurant:MyContext
+    ):Promise<Boolean> {
+        try {
+            const restaurant = await Restaurant.findOne({where:{id:restaurant_id}});
+        
+            if (!restaurant) {
+              throw new Error('Restaurant not logged in');
+            }
+        
+            restaurant.online = !restaurant.online;
+            await restaurant.save();
+        
+            return true;
+          } catch (err: any) {
+            throw new Error(`Error changing order status: ${err.message}`);
+          }
+    }
 
     @Query(() => [Restaurant])
     async getRestaurants(): Promise<Restaurant[]> {
